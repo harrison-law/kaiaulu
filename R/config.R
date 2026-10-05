@@ -1039,7 +1039,7 @@ get_tool_project <- function(tool_name, config_file) {
   return(tool_path)
 }
 
-#' Returns the path to the PySenti Python script
+#' Returns the path to the PySenti training Python script
 #'
 #' @description This function retrieves the path to the PySenti Python script
 #' from a parsed configuration file. The input `config_file` must be a parsed
@@ -1047,11 +1047,31 @@ get_tool_project <- function(tool_name, config_file) {
 #' not exist, a warning is issued.
 #'
 #' @param config_file A parsed configuration file obtained from \code{\link{parse_config}}.
-#' @return The file path to the PySenti script as a string.
+#' @return The file path to the PySenti training script as a string.
 #' @export
-get_pysenti_path <- function(config_file) {
+get_pysenti_train_path <- function(config_file) {
 
-  pysenti_path <- config_file[["pysenti"]]
+  pysenti_path <- config_file[["pysenti_train"]]
+
+  if (is.null(pysenti_path)) {
+    warning("Attribute does not exist.")
+  }
+
+  return(pysenti_path)
+}
+
+#' Returns the path to the PySenti prediction Python script
+#'
+#' @description This function retrieves the path to the PySenti prediction
+#' Python script from a parsed configuration file. If the attribute does not
+#' exist, a warning is issued.
+#'
+#' @param config_file A parsed configuration file obtained from \code{\link{parse_config}}.
+#' @return The file path to the PySenti prediction script as a string.
+#' @export
+get_pysenti_predict_path <- function(config_file) {
+
+  pysenti_path <- config_file[["pysenti_predict"]]
 
   if (is.null(pysenti_path)) {
     warning("Attribute does not exist.")

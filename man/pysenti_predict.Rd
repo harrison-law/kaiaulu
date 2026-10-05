@@ -19,7 +19,7 @@ pysenti_predict(
 
 \item{pysenti_conda_env_name}{pysenti conda env name if pysenti is setup in a conda env (required only if conda path specified)}
 
-\item{pysenti_path}{Path to the PySenti Python script.}
+\item{pysenti_path}{Path to the PySenti prediction Python script.}
 
 \item{reply_dt}{A data.table containing a `text` column.}
 

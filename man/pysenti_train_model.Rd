@@ -7,7 +7,7 @@
 pysenti_train_model(pysenti_path, train_data_path, model_save_path, model_name)
 }
 \arguments{
-\item{pysenti_path}{Path to the PySenti Python script.}
+\item{pysenti_path}{Path to the PySenti training Python script.}
 
 \item{train_data_path}{Path to the model train .csv with at least `text` and `polarity` columns.}
 

@@ -38,7 +38,8 @@ require(ggplot2)
 ```{r}
 # Paths to Sentiment Classifier -- see sailuh/sentiment_classifier
 tool <- parse_config("../tools.yml")
-pysenti_path <- get_pysenti_path(tool)        
+pysenti_train_path <- get_pysenti_train_path(tool)
+pysenti_predict_path <- get_pysenti_predict_path(tool)
 pysenti_conda_env_name <- get_pysenti_conda_env_name(tool)
 conda_path <- get_conda_path(tool)
 
@@ -231,7 +232,7 @@ fwrite(train_df[1:20],training_dataset_filepath)
 pysenti_train_model(
   conda_path             = conda_path,
   pysenti_conda_env_name = pysenti_conda_env_name,  
-  pysenti_path           = pysenti_path,
+  pysenti_path           = pysenti_train_path,
   train_data_path        = training_dataset_filepath,
   model_save_path        = model_save_path,
   model_name            = "bert-base-cased"
@@ -259,7 +260,7 @@ reply_dt[, polarity := 0]
 pred_dt <- pysenti_predict(
   conda_path             = conda_path,
   pysenti_conda_env_name = pysenti_conda_env_name,
-  pysenti_path           = pysenti_path,  
+  pysenti_path           = pysenti_predict_path,
   reply_dt               = reply_dt[1:20],
   model_save_path        = model_save_path,
   model_name             = "bert-base-cased",

@@ -13,7 +13,7 @@
 
 #' @param conda_path Path to conda if pysenti is setup in a conda env (optional)
 #' @param pysenti_conda_env_name pysenti conda env name if pysenti is setup in a conda env (required only if conda path specified)
-#' @param pysenti_path Path to the PySenti Python script.
+#' @param pysenti_path Path to the PySenti training Python script.
 #' @param train_data_path Path to the model train .csv with at least `text` and `polarity` columns.
 #' @param model_save_path Directory where the trained model will be stored.
 #' @param model_name Model architecture name; `"bert-base-cased"`, `"xlnet-base-cased", etc.
@@ -33,7 +33,6 @@ pysenti_train_model <- function(conda_path = "",
       pysenti_conda_env_name,
       "python",
       pysenti_path,
-      "--mode", "train",
       "--input", train_data_path,
       "--model_name", model_name,
       "--output", model_save_path
@@ -42,14 +41,12 @@ pysenti_train_model <- function(conda_path = "",
   }
   else{
     args <- c(
-      "python",
       pysenti_path,
-      "--mode", "train",
       "--input", train_data_path,
       "--model_name", model_name,
       "--output", model_save_path
     )
-    res <- system2(conda_path, args = args, stdout = TRUE, stderr = TRUE)
+    res <- system2("python", args = args, stdout = TRUE, stderr = TRUE)
   }
   # stringi::stri_c(c("conda",args), collapse = " ")
 
@@ -64,7 +61,7 @@ pysenti_train_model <- function(conda_path = "",
 #'
 #' @param conda_path Path to conda if pysenti is setup in a conda env (optional)
 #' @param pysenti_conda_env_name pysenti conda env name if pysenti is setup in a conda env (required only if conda path specified)
-#' @param pysenti_path Path to the PySenti Python script.
+#' @param pysenti_path Path to the PySenti prediction Python script.
 #' @param reply_dt A data.table containing a `text` column.
 #' @param model_save_path Path to the trained model folder.
 #' @param prediction_path Directory where the prediction CSV will be written.
@@ -89,7 +86,6 @@ pysenti_predict <- function(conda_path = "",
       pysenti_conda_env_name,
       "python",
       pysenti_path,
-      "--mode", "predict",
       "--input", prediction_save_path,
       "--model_name", model_name,
       "--model_path", model_save_path,
@@ -99,19 +95,15 @@ pysenti_predict <- function(conda_path = "",
   }
   else{
     args <- c(
-      "python",
       pysenti_path,
-      "--mode", "predict",
       "--input", prediction_save_path,
       "--model_name", model_name,
       "--model_path", model_save_path,
       "--output", prediction_save_path
     )
-    res <- system2(conda_path, args = args, stdout = TRUE, stderr = TRUE)
+    res <- system2("python", args = args, stdout = TRUE, stderr = TRUE)
   }
   # stringi::stri_c(c("conda",args), collapse = " ")
 
   data.table::fread(prediction_save_path)
 }
-
-
